@@ -11,6 +11,9 @@ class ResultPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final scorePercentage =
+        (((ref.watch(quizProvider).score) / allQuestions.length) * 100).round();
+
     return SafeArea(
       child: Scaffold(
         backgroundColor: const Color(0xFF481450),
@@ -30,9 +33,10 @@ class ResultPage extends ConsumerWidget {
                       'https://s3-alpha-sig.figma.com/img/0d0b/0589/f92419f24fac60a5f4c4cf74059dba12?Expires=1703462400&Signature=BCNHrNE5qe15hOe8c9sHSTha2h9vQDVYrJogXUXn8znWb~pHu2Revzf0EKB711RzsbEQSLlrXsnpP7~i~peNuJsIBi~hOYvnMHyBBIMEQJGhFB0H9rfVoP4pthFw8MgD097HAmmKXmDjW1k0IRyUP0RbFWkZOWzHQ5Lg-UjeTdQVqK0DXgnr4sOYpKkplGS2lTNyqOSaGq2YftmsmY6jQKSPwTWNHCXbwER-umPnWmwkKVUO7pxZinC-hhwCPakWxPP-z6HY32-4xFMrVwg5oPAto49EDTydisO5MKoQRRKjnNvQdoZBAUatfWh75bl6c1pei1FurjA3BN3uTbfDkg__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4',
                     ),
                     Text(
-                      '${(((ref.watch(quizProvider).score) / allQuestions.length) * 100).round()}% Score',
-                      style: const TextStyle(
-                          color: Colors.red,
+                      '$scorePercentage% Score',
+                      style: TextStyle(
+                          color:
+                              scorePercentage > 50 ? Colors.green : Colors.red,
                           fontSize: 30,
                           fontWeight: FontWeight.bold),
                     ),
@@ -70,9 +74,7 @@ class ResultPage extends ConsumerWidget {
                 style: ButtonStyle(
                     fixedSize: const MaterialStatePropertyAll(Size(135, 45)),
                     backgroundColor: MaterialStatePropertyAll(
-                        ref.watch(quizProvider).score == 5
-                            ? Colors.green
-                            : Colors.red)),
+                        scorePercentage > 50 ? Colors.green : Colors.red)),
                 onPressed: () {
                   ref.read(quizProvider.notifier).resetState();
                   Navigator.push(
@@ -81,9 +83,9 @@ class ResultPage extends ConsumerWidget {
                         builder: (context) => const HomePage(),
                       ));
                 },
-                child: const Text(
-                  'Try Again',
-                  style: TextStyle(color: Colors.black),
+                child: Text(
+                  scorePercentage > 50 ? 'Back' : 'Try Again',
+                  style: const TextStyle(color: Colors.black),
                 ),
               )
             ],
