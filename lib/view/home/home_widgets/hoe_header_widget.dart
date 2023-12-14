@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quiz_app/view/quiz_page/quiz_page.dart';
 
 class HomeHeaderWidget extends StatelessWidget {
   const HomeHeaderWidget({
@@ -16,7 +17,11 @@ class HomeHeaderWidget extends StatelessWidget {
           style: const ButtonStyle(
               fixedSize: MaterialStatePropertyAll(Size(135, 45)),
               backgroundColor: MaterialStatePropertyAll(Color(0xFF8514E1))),
-          onPressed: () {},
+          onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const QuizPage(),
+              )),
           child: const Text('Start Quize'),
         ),
       ],

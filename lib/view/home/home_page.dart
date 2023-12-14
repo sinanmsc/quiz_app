@@ -13,9 +13,7 @@ class HomePage extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              SizedBox(
-                height: 20,
-              ),
+              SizedBox(height: 20),
               HomeHeaderWidget(),
               HomeFooterWidget()
             ],
